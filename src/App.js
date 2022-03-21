@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Detatil from './page/Detail';
 import Register from './page/Register';
 import Review from './page/Review';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
