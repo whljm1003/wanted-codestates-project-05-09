@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import icon from '../assets/logo.png';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import icon from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
 
   const goToHome = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const BtnHandler = () => {
-    console.log('register 컴포넌트 호출!!');
+    navigate("/register");
   };
 
   return (
@@ -30,10 +30,10 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto 0.5rem auto;
+  margin: 0 auto 1rem auto;
   max-width: 428px;
   padding: 0 15px;
-  height: 5vh;
+  height: 4rem;
   background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 0.5px solid ${({ theme }) => theme.colors.grey};
 `;
@@ -41,12 +41,12 @@ const Title = styled.div`
   display: inline-block;
   cursor: pointer;
   .logo {
-    width: 11rem;
-    height: 2rem;
+    width: 10rem;
+    height: 1.7rem;
   }
 `;
 const Btn = styled.button`
-  width: 5rem;
+  width: 4.5rem;
   height: 2rem;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.black};
