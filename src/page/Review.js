@@ -5,7 +5,7 @@ import data from "../assets/data";
 import { BsGrid3X3 } from "react-icons/bs";
 import { TiThListOutline } from "react-icons/ti";
 
-const hashTag = ["최신순", "좋아요 많은순", "댓글 많은순", "랜덤"];
+const hashTag = ["최신순", "좋아요 많은순", "댓글 많은순", "랜덤순"];
 function Review() {
   const [list, setList] = useState([]);
   const [hash, setHash] = useState(0);
@@ -56,6 +56,8 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   max-width: 420px;
   margin: 0 auto;
+  height: 100vh;
+  overflow: hidden;
 `;
 const HashTag = styled.div`
   ${({ theme }) => theme.common.flexRow}
@@ -65,7 +67,7 @@ const HashTag = styled.div`
 const Tag = styled.button`
   ${({ theme }) => theme.common.flexRow}
   border: 1.8px solid ${({ theme }) => theme.colors.black};
-  border-radius: 12px;
+  border-radius: 50px;
   font-size: 1rem;
   font-weight: 800;
   padding: 0.4rem;
