@@ -1,9 +1,10 @@
 // color
 const colors = {
-  white: '#ffff',
-  lightWhite: '#DADADA',
-  black: '#010101',
-  grey: '#999999',
+  white: "#ffff",
+  lightWhite: "#DADADA",
+  black: "#010101",
+  grey: "#999999",
+  lightGrey: "#999999",
 };
 
 // 자주 사용하는 스타일 속성
