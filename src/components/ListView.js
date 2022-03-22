@@ -1,27 +1,35 @@
-import react from "react";
+import react, { useEffect } from "react";
 import styled from "styled-components";
-import datas from "../assets/data";
+import { useDispatch, useSelector } from "react-redux";
 import { BiLike } from "react-icons/bi";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 
 function ListView() {
+  const list = useSelector((state) => state.data.data);
+  const date = (createDt) =>
+    new Date(createDt).toLocaleDateString("ko", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
   const likeCounteHandler = () => {
     console.log("1증가해라!");
   };
   const shareHandler = () => {
     console.log("공유해랏!");
   };
+
   return (
     <>
-      {datas.map((data) => (
-        <Wrapper key={data.id}>
-          <Img src={data.productImg} />
+      {list.map((item) => (
+        <Wrapper key={item.id}>
+          <Img src={item.productImg} />
           <Info>
             <LikeSection>
               <div className="left">
                 <LikeIcon onClick={likeCounteHandler} />
-                <span>{data.likeCnt}</span>
+                <span>{item.likeCnt}</span>
               </div>
               <div className="right">
                 <ShareIcon onClick={shareHandler} />
@@ -34,9 +42,9 @@ function ListView() {
               <Star />
               <Star />
             </Rating>
-            <h1 className="title">{data.productNm}</h1>
-            <textarea className="text" readOnly value={data.review} />
-            <div className="date">2022.10.03</div>
+            <h1 className="title">{item.productNm}</h1>
+            <textarea className="text" readOnly value={item.review} />
+            <div className="date">{date(item.createDt)}</div>
           </Info>
         </Wrapper>
       ))}
@@ -93,19 +101,15 @@ const LikeSection = styled.div`
     ${({ theme }) => theme.common.flexRow}
   }
 `;
-
 const LikeIcon = styled(BiLike)`
   cursor: pointer;
 `;
-
 const ShareIcon = styled(BsShareFill)`
   cursor: pointer;
 `;
-
 const Rating = styled.div`
   margin-bottom: 1rem;
 `;
-
 const Star = styled(FaStar)`
   margin-right: 0.3rem;
   font-size: 1.2rem;

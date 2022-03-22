@@ -5,15 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
-
-  const goToHome = () => {
-    navigate("/");
-  };
-
-  const BtnHandler = () => {
-    navigate("/register");
-  };
-
+  const goToHome = () => navigate("/");
+  const BtnHandler = () => navigate("/register");
   return (
     <Container>
       <Title onClick={goToHome}>
@@ -23,7 +16,6 @@ function Header() {
     </Container>
   );
 }
-
 export default Header;
 
 const Container = styled.div`

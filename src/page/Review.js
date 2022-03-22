@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Header from "../components/Header";
-import data from "../assets/data";
 import { BsGrid3X3 } from "react-icons/bs";
 import { TiThListOutline } from "react-icons/ti";
 import ListView from "../components/ListView";
-
+import GridView from "../components/GridView";
 const hashTag = ["최신순", "좋아요 많은순", "댓글 많은순", "랜덤순"];
 function Review() {
-  const [list, setList] = useState([]);
   const [hash, setHash] = useState(0);
   const [tab, setTab] = useState("grid");
-  useEffect(() => {
-    setList(data);
-  }, [data]);
   const changeHash = (index) => setHash(index);
-
   const changeTab = (tab) => setTab(tab);
-
   return (
     <Wrapper>
       <Header />
@@ -40,17 +33,8 @@ function Review() {
           <TiThListOutline className="icon" size={24} />
         </Tab>
       </TabSection>
-      {tab === "grid" ? (
-        <GridView>
-          {list?.map((item) => (
-            <div className="container" key={item.id}>
-              <img className="photo" alt="img" src={item.productImg} />
-            </div>
-          ))}
-        </GridView>
-      ) : (
-        <ListView />
-      )}
+      {tab === "grid" && <GridView />}
+      {tab === "list" && <ListView />}
     </Wrapper>
   );
 }
@@ -109,20 +93,4 @@ const Tab = styled.span`
       }
       border-bottom: 2px solid ${({ theme }) => theme.colors.black};
     `}
-`;
-
-const GridView = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-column-gap: 2px;
-  grid-row-gap: 2px;
-  height: 85vh;
-  padding: 2px;
-  .container {
-    height: 150px;
-  }
-  .photo {
-    width: 100%;
-    height: 100%;
-  }
 `;

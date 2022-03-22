@@ -1,11 +1,11 @@
-import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from './GlobalStyle';
-import theme from './theme';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Detatil from './page/Detail';
-import Register from './page/Register';
-import Review from './page/Review';
+import React, { useEffect } from "react";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./GlobalStyle";
+import theme from "./theme";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Detatil from "./page/Detail";
+import Register from "./page/Register";
+import Review from "./page/Review";
 
 function App() {
   return (

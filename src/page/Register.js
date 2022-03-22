@@ -1,39 +1,49 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addReview } from "../store/dataSlice";
 import { FaStar } from "react-icons/fa";
-import { TiHeadphones } from "react-icons/ti";
 const ratings = [1, 2, 3, 4, 5];
 
 function Register() {
   const [review, setReview] = useState({
-    title: "",
-    text: "",
-    img: "",
-    rating: 0,
+    id: 0,
+    productNm: "",
+    review: "",
+    productImg: "",
+    reviewRate: 0,
+    createDt: new Date().getTime(),
   });
   const imgRef = useRef(null);
-  useEffect(() => {
-    console.log(review);
-  }, [review]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const titleHandler = (e) => {
-    setReview({ ...review, title: e.target.value });
+    const { value } = e.target;
+    setReview({ ...review, id: value.charCodeAt(), productNm: value });
   };
   const textHandler = (e) => {
-    setReview({ ...review, text: e.target.value });
+    setReview({ ...review, review: e.target.value });
   };
   const ratingHandler = (rating) => {
-    setReview({ ...review, rating: rating });
+    setReview({ ...review, reviewRate: rating });
   };
   const imgHandler = (e) => {
     e.preventDefault();
     imgRef.current.click();
   };
   const saveFileImage = (e) => {
-    setReview({ ...review, img: URL.createObjectURL(e.target.files[0]) });
+    setReview({
+      ...review,
+      productImg: URL.createObjectURL(e.target.files[0]),
+    });
   };
-  const submit = () => {
-    console.log("제출");
+  const submit = (e) => {
+    e.preventDefault();
+    dispatch(addReview(review));
+    navigate("/");
   };
   return (
     <Wrapper>
@@ -58,7 +68,9 @@ function Register() {
           />
         </Section>
         <ImgSection>
-          {review.img && <Preview alt="preview" src={review.img} />}
+          {review.productImg && (
+            <Preview alt="preview" src={review.productImg} />
+          )}
           <input
             style={{ display: "none" }}
             ref={imgRef}
@@ -97,15 +109,12 @@ const Wrapper = styled.div`
     height: 120vh;
   }
 `;
-
 const Form = styled.form`
   margin: 2rem;
 `;
-
 const Section = styled.div`
   width: 100%;
 `;
-
 const Name = styled.label`
   display: block;
   font-size: 1.8rem;
@@ -124,7 +133,6 @@ const Title = styled.input`
   margin-bottom: 1rem;
   font-size: 1rem;
 `;
-
 const Contents = styled.textarea`
   box-sizing: border-box;
   border: 1px solid ${({ theme }) => theme.colors.grey};
@@ -149,7 +157,6 @@ const Preview = styled.img`
   width: 40%;
   border-radius: 50%;
 `;
-
 const Btn = styled.button`
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.black};
@@ -164,7 +171,6 @@ const Btn = styled.button`
 const Rating = styled.div`
   ${({ theme }) => theme.common.flexRow};
 `;
-
 const Star = styled(FaStar)`
   font-size: 3.5rem;
   margin-right: 0.7rem;
