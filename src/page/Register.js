@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addReview } from "../store/dataSlice";
 import { FaStar } from "react-icons/fa";
-const ratings = [1, 2, 3, 4, 5];
+import Stars from "../components/Stars";
 
 function Register() {
   const [review, setReview] = useState({
@@ -16,17 +16,22 @@ function Register() {
     reviewRate: 0,
     createDt: new Date().getTime(),
   });
+  const ratings = [1, 2, 3, 4, 5];
+  const [hoverRating, setHoverRating] = useState(0);
   const imgRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  // titleHandler
   const titleHandler = (e) => {
     const { value } = e.target;
     setReview({ ...review, id: value.charCodeAt(), productNm: value });
   };
+  // textHandler
   const textHandler = (e) => setReview({ ...review, review: e.target.value });
+  // ratingHandler
   const ratingHandler = (rating) =>
     setReview({ ...review, reviewRate: rating });
+  // imgHandler
   const imgHandler = (e) => {
     e.preventDefault();
     imgRef.current.click();
@@ -37,11 +42,16 @@ function Register() {
       productImg: URL.createObjectURL(e.target.files[0]),
     });
   };
+  // submit
   const submit = (e) => {
     e.preventDefault();
     dispatch(addReview(review));
     navigate("/");
   };
+  // test useEfeect
+  useEffect(() => {
+    console.log(review);
+  }, [review]);
   return (
     <Wrapper>
       <Header />
@@ -80,11 +90,14 @@ function Register() {
         <Section>
           <Name>평점</Name>
           <Rating>
-            {ratings.map((rating, index) => (
-              <Star
-                key={rating}
-                selected={index === 3}
-                onClick={() => ratingHandler(rating)}
+            {ratings.map((star) => (
+              <Stars
+                key={star}
+                index={star}
+                rating={review.reviewRate}
+                hoverRating={hoverRating}
+                setHoverRating={setHoverRating}
+                ratingHandler={ratingHandler}
               />
             ))}
           </Rating>
@@ -154,6 +167,17 @@ const Preview = styled.img`
   width: 40%;
   border-radius: 50%;
 `;
+
+const Rating = styled.div`
+  ${({ theme }) => theme.common.flexRow};
+  margin: 0.3rem;
+`;
+const Star = styled(FaStar)`
+  font-size: 3.5rem;
+  margin-right: 0.7rem;
+  color: ${({ theme }) => theme.colors.lightGrey};
+  cursor: pointer;
+`;
 const Btn = styled.button`
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.black};
@@ -164,16 +188,4 @@ const Btn = styled.button`
   width: 100%;
   height: 3rem;
   margin: 1rem 0;
-`;
-const Rating = styled.div`
-  ${({ theme }) => theme.common.flexRow};
-`;
-const Star = styled(FaStar)`
-  font-size: 3.5rem;
-  margin-right: 0.7rem;
-  color: ${({ theme }) => theme.colors.grey};
-  cursor: pointer;
-  &:hover {
-    color: gold;
-  }
 `;

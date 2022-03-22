@@ -7,7 +7,7 @@ const data = [
     ],
     createDt: 1645401600,
     review: "무난하게 데일리로 활용중입니다.",
-    reviewRate: 3,
+    reviewRate: 1,
     likeCnt: 244,
     comments: [
       {

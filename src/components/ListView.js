@@ -1,10 +1,8 @@
-import react, { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 import { BiLike } from "react-icons/bi";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
-
+const star = [1, 2, 3, 4, 5];
 function ListView({ data }) {
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
@@ -18,6 +16,7 @@ function ListView({ data }) {
   const shareHandler = () => {
     console.log("공유해랏!");
   };
+  const starHandler = () => {};
 
   return (
     <>
@@ -35,11 +34,12 @@ function ListView({ data }) {
               </div>
             </LikeSection>
             <Rating>
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              <Star />
+              {star.map((start, index) => (
+                <Star
+                  key={index}
+                  color={item.reviewRate >= start ? "#fbc531" : null}
+                />
+              ))}
             </Rating>
             <h1 className="title">{item.productNm}</h1>
             <textarea className="text" readOnly value={item.review} />
@@ -112,5 +112,5 @@ const Rating = styled.div`
 const Star = styled(FaStar)`
   margin-right: 0.3rem;
   font-size: 1.2rem;
-  color: ${({ theme }) => theme.colors.grey};
+  color: ${({ theme }) => theme.colors.lightGrey};
 `;

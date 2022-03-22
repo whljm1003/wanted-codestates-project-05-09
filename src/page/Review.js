@@ -10,7 +10,6 @@ function Review() {
   const [sort, setSort] = useState(0);
   const [view, setView] = useState("grid");
   const [data, setData] = useState([]);
-
   useEffect(() => {
     const newdata = [...data];
     switch (sort) {
