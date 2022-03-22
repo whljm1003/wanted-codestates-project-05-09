@@ -24,12 +24,9 @@ function Register() {
     const { value } = e.target;
     setReview({ ...review, id: value.charCodeAt(), productNm: value });
   };
-  const textHandler = (e) => {
-    setReview({ ...review, review: e.target.value });
-  };
-  const ratingHandler = (rating) => {
+  const textHandler = (e) => setReview({ ...review, review: e.target.value });
+  const ratingHandler = (rating) =>
     setReview({ ...review, reviewRate: rating });
-  };
   const imgHandler = (e) => {
     e.preventDefault();
     imgRef.current.click();

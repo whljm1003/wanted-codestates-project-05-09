@@ -5,8 +5,7 @@ import { BiLike } from "react-icons/bi";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 
-function ListView() {
-  const list = useSelector((state) => state.data.data);
+function ListView({ data }) {
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
       month: "long",
@@ -22,7 +21,7 @@ function ListView() {
 
   return (
     <>
-      {list.map((item) => (
+      {data.map((item) => (
         <Wrapper key={item.id}>
           <Img src={item.productImg} />
           <Info>

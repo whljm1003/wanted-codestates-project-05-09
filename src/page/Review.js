@@ -1,40 +1,41 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Header from "../components/Header";
-import { BsGrid3X3 } from "react-icons/bs";
-import { TiThListOutline } from "react-icons/ti";
+import Tab from "../components/Tab";
 import ListView from "../components/ListView";
 import GridView from "../components/GridView";
-const hashTag = ["최신순", "좋아요 많은순", "댓글 많은순", "랜덤순"];
+import { useDispatch, useSelector } from "react-redux";
 function Review() {
-  const [hash, setHash] = useState(0);
-  const [tab, setTab] = useState("grid");
-  const changeHash = (index) => setHash(index);
-  const changeTab = (tab) => setTab(tab);
+  const dataInfo = useSelector((state) => state.data.data);
+  const [sort, setSort] = useState(0);
+  const [view, setView] = useState("grid");
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const newdata = [...data];
+    switch (sort) {
+      case 0:
+        setData(dataInfo);
+        break;
+      case 1:
+        setData(newdata.sort((a, b) => b.createDt - a.createDt));
+        break;
+      case 2:
+        setData(newdata.sort((a, b) => b.comments.length - a.comments.length));
+        break;
+      case 3:
+        setData(newdata.sort(() => Math.random() - 0.5));
+        break;
+      default:
+        setData(dataInfo);
+    }
+  }, [sort]);
   return (
     <Wrapper>
       <Header />
-      <HashTag>
-        {hashTag.map((tag, index) => (
-          <Tag
-            key={index}
-            selected={hash === index}
-            onClick={() => changeHash(index)}
-          >
-            {tag}
-          </Tag>
-        ))}
-      </HashTag>
-      <TabSection>
-        <Tab selected={tab === "grid"} onClick={() => changeTab("grid")}>
-          <BsGrid3X3 className="icon" size={24} />
-        </Tab>
-        <Tab selected={tab === "list"} onClick={() => changeTab("list")}>
-          <TiThListOutline className="icon" size={24} />
-        </Tab>
-      </TabSection>
-      {tab === "grid" && <GridView />}
-      {tab === "list" && <ListView />}
+      <Tab sort={sort} setSort={setSort} view={view} setView={setView} />
+      {view === "grid" && <GridView data={data} />}
+      {view === "list" && <ListView data={data} />}
     </Wrapper>
   );
 }
@@ -47,50 +48,4 @@ const Wrapper = styled.div`
   margin: 0 auto;
   /* height: 100vh; */
   overflow: hidden;
-`;
-const HashTag = styled.div`
-  ${({ theme }) => theme.common.flexRow}
-  width: 100%;
-  height: 2rem;
-`;
-const Tag = styled.button`
-  ${({ theme }) => theme.common.flexRow}
-  border: 1.8px solid ${({ theme }) => theme.colors.black};
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: 800;
-  padding: 0.4rem;
-  margin-right: 0.6rem;
-  cursor: pointer;
-  ${({ selected }) =>
-    selected &&
-    css`
-      background-color: ${({ theme }) => theme.colors.black};
-      color: ${({ theme }) => theme.colors.white};
-    `}
-`;
-const TabSection = styled.div`
-  ${({ theme }) => theme.common.flexRow}
-  width: 100%;
-  height: 3rem;
-  margin: 0.5rem 0;
-`;
-
-const Tab = styled.span`
-  ${({ theme }) => theme.common.flexRow}
-  width: 50%;
-  height: 100%;
-  cursor: pointer;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.grey};
-  .icon {
-    color: ${({ theme }) => theme.colors.grey};
-  }
-  ${({ selected }) =>
-    selected &&
-    css`
-      .icon {
-        color: ${({ theme }) => theme.colors.black};
-      }
-      border-bottom: 2px solid ${({ theme }) => theme.colors.black};
-    `}
 `;

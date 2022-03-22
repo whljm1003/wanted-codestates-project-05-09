@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
-function GridView() {
-  const list = useSelector((state) => state.data.data);
+function GridView({ data }) {
+  // const [data, setData] = useState([]);
+  // const test = () => {
+  //   const newdata = [...list];
+  //   console.log(newdata.sort((a, b) => b.createDt - a.createDt));
+  // };
   return (
     <Wrapper>
-      {list?.map((item) => (
+      {data?.map((item) => (
         <div className="container" key={item.id}>
           <img className="photo" alt="img" src={item.productImg} />
         </div>
