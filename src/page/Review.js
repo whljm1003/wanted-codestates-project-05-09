@@ -9,32 +9,13 @@ function Review() {
   const dataInfo = useSelector((state) => state.data.data);
   const [sort, setSort] = useState(0);
   const [view, setView] = useState("grid");
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const newdata = [...data];
-    switch (sort) {
-      case 0:
-        setData(dataInfo);
-        break;
-      case 1:
-        setData(newdata.sort((a, b) => b.createDt - a.createDt));
-        break;
-      case 2:
-        setData(newdata.sort((a, b) => b.comments.length - a.comments.length));
-        break;
-      case 3:
-        setData(newdata.sort(() => Math.random() - 0.5));
-        break;
-      default:
-        setData(dataInfo);
-    }
-  }, [sort]);
+
   return (
     <Wrapper>
       <Header />
       <Tab sort={sort} setSort={setSort} view={view} setView={setView} />
-      {view === "grid" && <GridView data={data} />}
-      {view === "list" && <ListView data={data} />}
+      {view === "grid" && <GridView data={dataInfo} />}
+      {view === "list" && <ListView data={dataInfo} />}
     </Wrapper>
   );
 }

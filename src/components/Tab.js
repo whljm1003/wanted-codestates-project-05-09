@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { BsGrid3X3 } from "react-icons/bs";
 import { TiThListOutline } from "react-icons/ti";
+import { useDispatch } from "react-redux";
+import { sortedData } from "../store/dataSlice";
 const sortTag = ["최신순", "좋아요 많은순", "댓글 많은순", "랜덤순"];
 function Tab({ sort, setSort, view, setView }) {
-  const changeSort = (index) => setSort(index);
+  const dispatch = useDispatch();
+  const changeSort = (index) => {
+    setSort(index);
+    dispatch(sortedData(index));
+  };
+
   const changeTab = (tab) => setView(tab);
   return (
     <>

@@ -9,10 +9,27 @@ const dataSlice = createSlice({
   name: "reviews",
   initialState,
   reducers: {
-    addStar(state, action) {},
+    increaseLike(state, action) {
+      const id = action.payload;
+      state.data.map((item) => {
+        if (item.id === id) {
+          item.likeCnt++;
+          item.clicked = true;
+        }
+      });
+    },
+    decreaseLike(state, action) {
+      const id = action.payload;
+      state.data.map((item) => {
+        if (item.id === id) {
+          item.likeCnt--;
+          item.clicked = false;
+        }
+      });
+    },
     addReview(state, action) {
       const newItem = action.payload;
-      state.data.push({
+      state.data.unshift({
         id: newItem.id,
         productNm: newItem.productNm,
         productImg: newItem.productImg,
@@ -23,10 +40,33 @@ const dataSlice = createSlice({
       });
       window.localStorage.setItem("data", JSON.stringify(state.data));
     },
+    sortedData(state, action) {
+      const index = action.payload;
+      const newdata = [...data];
+      switch (index) {
+        case 0:
+          state.data = data;
+          break;
+        case 1:
+          state.data = newdata.sort((a, b) => b.likeCnt - a.likeCnt);
+          break;
+        case 2:
+          state.data = newdata.sort(
+            (a, b) => b.comments.length - a.comments.length
+          );
+          break;
+        case 3:
+          state.data = newdata.sort(() => Math.random() - 0.5);
+          break;
+        default:
+          return state.data;
+      }
+    },
     addComment(state, action) {},
   },
 });
 
-export const { addStar, addReview, addComment } = dataSlice.actions;
+export const { increaseLike, decreaseLike, addReview, sortedData, addComment } =
+  dataSlice.actions;
 
 export default dataSlice.reducer;

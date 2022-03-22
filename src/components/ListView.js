@@ -1,22 +1,26 @@
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { BiLike } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { increaseLike, decreaseLike } from "../store/dataSlice";
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
+
 const star = [1, 2, 3, 4, 5];
 function ListView({ data }) {
+  const dispatch = useDispatch();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
       month: "long",
       day: "numeric",
       year: "numeric",
     });
-  const likeCounteHandler = () => {
-    console.log("1증가해라!");
-  };
-  const shareHandler = () => {
+
+  const increase = (id) => dispatch(increaseLike(id));
+  const decrease = (id) => dispatch(decreaseLike(id));
+  const shareHandler = (e) => {
     console.log("공유해랏!");
   };
-  const starHandler = () => {};
 
   return (
     <>
@@ -26,11 +30,19 @@ function ListView({ data }) {
           <Info>
             <LikeSection>
               <div className="left">
-                <LikeIcon onClick={likeCounteHandler} />
+                <LikeIcon>
+                  {!item.clicked ? (
+                    <AiOutlineLike onClick={() => increase(item.id)} />
+                  ) : (
+                    <AiFillLike onClick={() => decrease(item.id)} />
+                  )}
+                </LikeIcon>
                 <span>{item.likeCnt}</span>
               </div>
               <div className="right">
-                <ShareIcon onClick={shareHandler} />
+                <ShareIcon onClick={shareHandler}>
+                  <BsShareFill />
+                </ShareIcon>
               </div>
             </LikeSection>
             <Rating>
@@ -93,17 +105,18 @@ const LikeSection = styled.div`
     ${({ theme }) => theme.common.flexRow}
     gap: 0.5rem;
     & > span {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
     }
   }
   .right {
     ${({ theme }) => theme.common.flexRow}
   }
 `;
-const LikeIcon = styled(BiLike)`
+const LikeIcon = styled.div`
   cursor: pointer;
 `;
-const ShareIcon = styled(BsShareFill)`
+
+const ShareIcon = styled.div`
   cursor: pointer;
 `;
 const Rating = styled.div`
