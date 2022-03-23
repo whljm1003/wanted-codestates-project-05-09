@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { increaseLike, decreaseLike, filterId } from "../store/dataSlice";
+import { increaseLike, decreaseLike } from "../store/dataSlice";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
-import Loader from "./Loader";
 import { useParams } from "react-router-dom";
 
 const star = [1, 2, 3, 4, 5];
 
 function ListView() {
   const [item, setItem] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const id = useParams();
   const dataInfo = useSelector((state) => state.data.data);
   const dispatch = useDispatch();
@@ -24,26 +22,24 @@ function ListView() {
     });
   const increase = (id) => dispatch(increaseLike(id));
   const decrease = (id) => dispatch(decreaseLike(id));
-
   const shareHandler = (e) => {
     console.log("공유해랏!");
   };
-
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-  useEffect(() => {
+  const getItem = () => {
     const data = dataInfo.filter((item) => item.id === id.id);
     setItem(data[0]);
-  }, []);
+  };
 
+  useEffect(() => {
+    getItem();
+  }, [dataInfo]);
+
+  useEffect(() => {
+    console.log(item);
+  }, [item]);
   return (
     <>
       <Wrapper>
-        {isLoading && <Loader />}
         <Img src={item.productImg} />
         <Info>
           <LikeSection>
@@ -75,6 +71,7 @@ function ListView() {
           <textarea className="text" readOnly value={item.review} />
           <div className="date">{date(item.createDt)}</div>
         </Info>
+        <div>댓글창이닷!</div>
       </Wrapper>
     </>
   );

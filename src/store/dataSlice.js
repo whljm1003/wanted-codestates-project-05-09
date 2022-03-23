@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import data from "../assets/data";
 
 const initialState = {
-  data: data,
-  filterData: null,
+  data: JSON.parse(window.localStorage.getItem("data")) || data,
 };
 
 const dataSlice = createSlice({
@@ -18,6 +17,7 @@ const dataSlice = createSlice({
           item.clicked = true;
         }
       });
+      window.localStorage.setItem("data", JSON.stringify(state.data));
     },
     decreaseLike(state, action) {
       const id = action.payload;
@@ -27,6 +27,7 @@ const dataSlice = createSlice({
           item.clicked = false;
         }
       });
+      window.localStorage.setItem("data", JSON.stringify(state.data));
     },
     addReview(state, action) {
       const newItem = action.payload;
@@ -63,21 +64,11 @@ const dataSlice = createSlice({
           return state.data;
       }
     },
-    filterId: (state, action) => {
-      const id = action.payload;
-      state.filterData = state.data.filter((item) => item.id === id);
-    },
     addComment(state, action) {},
   },
 });
 
-export const {
-  increaseLike,
-  decreaseLike,
-  addReview,
-  sortedData,
-  filterId,
-  addComment,
-} = dataSlice.actions;
+export const { increaseLike, decreaseLike, addReview, sortedData, addComment } =
+  dataSlice.actions;
 
 export default dataSlice.reducer;
