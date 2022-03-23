@@ -8,7 +8,7 @@ import { FaStar } from "react-icons/fa";
 import Loader from "./Loader";
 
 const star = [1, 2, 3, 4, 5];
-function ListView({ data, isLoading }) {
+function ListView({ item }) {
   const dispatch = useDispatch();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
@@ -16,64 +16,66 @@ function ListView({ data, isLoading }) {
       day: "numeric",
       year: "numeric",
     });
+  const [isLoading, setIsLoading] = useState(false);
   const increase = (id) => dispatch(increaseLike(id));
   const decrease = (id) => dispatch(decreaseLike(id));
   const shareHandler = (e) => {
     console.log("공유해랏!");
   };
 
+  useEffect(async () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
-    <Wrapper>
-      {isLoading && <Loader />}
-      {data.map((item, index) => (
-        <Container key={index}>
-          <Img src={item.productImg} />
-          <Info>
-            <LikeSection>
-              <div className="left">
-                <LikeIcon>
-                  {!item.clicked ? (
-                    <AiOutlineLike onClick={() => increase(item.id)} />
-                  ) : (
-                    <AiFillLike onClick={() => decrease(item.id)} />
-                  )}
-                </LikeIcon>
-                <span>{item.likeCnt}</span>
-              </div>
-              <div className="right">
-                <ShareIcon onClick={shareHandler}>
-                  <BsShareFill />
-                </ShareIcon>
-              </div>
-            </LikeSection>
-            <Rating>
-              {star.map((start, index) => (
-                <Star
-                  key={index}
-                  color={item.reviewRate >= start ? "#fbc531" : null}
-                />
-              ))}
-            </Rating>
-            <h1 className="title">{item.productNm}</h1>
-            <textarea className="text" readOnly value={item.review} />
-            <div className="date">{date(item.createDt)}</div>
-          </Info>
-        </Container>
-      ))}
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Img src={item.productImg} />
+        <Info>
+          <LikeSection>
+            <div className="left">
+              <LikeIcon>
+                {!item.clicked ? (
+                  <AiOutlineLike onClick={() => increase(item.id)} />
+                ) : (
+                  <AiFillLike onClick={() => decrease(item.id)} />
+                )}
+              </LikeIcon>
+              <span>{item.likeCnt}</span>
+            </div>
+            <div className="right">
+              <ShareIcon onClick={shareHandler}>
+                <BsShareFill />
+              </ShareIcon>
+            </div>
+          </LikeSection>
+          <Rating>
+            {star.map((start, index) => (
+              <Star
+                key={index}
+                color={item.reviewRate >= start ? "#fbc531" : null}
+              />
+            ))}
+          </Rating>
+          <h1 className="title">{item.productNm}</h1>
+          <textarea className="text" readOnly value={item.review} />
+          <div className="date">{date(item.createDt)}</div>
+        </Info>
+      </Wrapper>
+    </>
   );
 }
 
 export default ListView;
 
 const Wrapper = styled.div`
-  position: relative;
   width: 100%;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  z-index: -10;
 `;
 const Img = styled.img`
   width: 100%;

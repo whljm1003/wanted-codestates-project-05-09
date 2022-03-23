@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "./Loader";
 
-function GridView({ data }) {
+function GridView({ data, isLoading }) {
   const [list, setList] = useState(data.slice(0, 20));
-  const [isLoading, setIsLoading] = useState(false);
   const loadRef = useRef(null);
   const observerRef = useRef(null);
+  const navigate = useNavigate();
 
   const getMoreItem = async () => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -23,6 +24,10 @@ function GridView({ data }) {
     },
     [list]
   );
+  const ClickedItem = (item) => {
+    // console.log("check");
+    navigate("/detail");
+  };
 
   useEffect(() => {
     if (loadRef.current) {
@@ -34,25 +39,24 @@ function GridView({ data }) {
     return () => observerRef.current && observerRef.current.disconnect();
   }, [onIntersect]);
 
-  useEffect(async () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  useEffect(() => {
+    setList(data.slice(0, 20));
+  }, [data]);
 
   return (
-    <>
+    <Wrapper>
       {isLoading && <Loader />}
-      <Wrapper>
-        {list?.map((item, index) => (
-          <div className="container" key={index}>
-            <img className="photo" alt="img" src={item.productImg} />
-          </div>
-        ))}
-        <Load ref={loadRef}></Load>
-      </Wrapper>
-    </>
+      {list?.map((item, index) => (
+        <div
+          className="container"
+          key={index}
+          onClick={() => ClickedItem(item)}
+        >
+          <img className="photo" alt="img" src={item.productImg} />
+        </div>
+      ))}
+      <Load ref={loadRef}></Load>
+    </Wrapper>
   );
 }
 
@@ -65,8 +69,10 @@ const Wrapper = styled.div`
   grid-row-gap: 2px;
   height: 85vh;
   padding: 2px;
+  position: relative;
   .container {
     height: 150px;
+    cursor: pointer;
   }
   .photo {
     width: 100%;

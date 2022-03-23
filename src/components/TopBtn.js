@@ -4,7 +4,6 @@ import { FaArrowCircleUp } from "react-icons/fa";
 function TopBtn({ container }) {
   const [ScrollY, setScrollY] = useState(0);
   const [BtnStatus, setBtnStatus] = useState(false);
-
   const handleFollow = () => {
     setScrollY(container.current.scrollTop);
     if (ScrollY > 100) {
@@ -13,7 +12,6 @@ function TopBtn({ container }) {
       setBtnStatus(false);
     }
   };
-
   const handleTop = () => {
     container.current.scrollTo({
       top: 0,
@@ -22,15 +20,13 @@ function TopBtn({ container }) {
     setScrollY(0);
     setBtnStatus(false);
   };
-
   useEffect(() => {
-    console.log(BtnStatus);
     const watch = () => {
       container.current.addEventListener("scroll", handleFollow);
     };
     watch();
     return () => {
-      container.current.removeEventListener("scroll", handleFollow);
+      container.current?.removeEventListener("scroll", handleFollow);
     };
   });
 

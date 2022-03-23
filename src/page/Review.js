@@ -10,15 +10,22 @@ function Review() {
   const dataInfo = useSelector((state) => state.data.data);
   const [sort, setSort] = useState(0);
   const [view, setView] = useState("grid");
+  const [isLoading, setIsLoading] = useState(false);
   const container = useRef();
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, [dataInfo]);
 
   return (
     <Wrapper>
       <Container ref={container}>
         <Header />
         <Tab sort={sort} setSort={setSort} view={view} setView={setView} />
-        {view === "grid" && <GridView data={dataInfo} />}
-        {view === "list" && <ListView data={dataInfo} />}
+        {view === "grid" && <GridView data={dataInfo} isLoading={isLoading} />}
+        {view === "list" && <ListView data={dataInfo} isLoading={isLoading} />}
       </Container>
       <TopBtn container={container} />
     </Wrapper>
