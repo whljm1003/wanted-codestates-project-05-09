@@ -50,7 +50,6 @@ function GridView({ data }) {
             <img className="photo" alt="img" src={item.productImg} />
           </div>
         ))}
-
         <Load ref={loadRef}></Load>
       </Wrapper>
     </>
