@@ -5,6 +5,7 @@ import { increaseLike, decreaseLike } from "../store/dataSlice";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
+import Loader from "./Loader";
 
 const star = [1, 2, 3, 4, 5];
 function ListView({ data }) {
@@ -15,17 +16,27 @@ function ListView({ data }) {
       day: "numeric",
       year: "numeric",
     });
-
+  const [isLoading, setIsLoading] = useState(false);
   const increase = (id) => dispatch(increaseLike(id));
   const decrease = (id) => dispatch(decreaseLike(id));
   const shareHandler = (e) => {
     console.log("공유해랏!");
   };
 
+  useEffect(async () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
-      {data.map((item) => (
-        <Wrapper key={item.id}>
+      {data.map((item, index) => (
+        <Wrapper key={index}>
           <Img src={item.productImg} />
           <Info>
             <LikeSection>

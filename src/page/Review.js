@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Tab from "../components/Tab";
@@ -9,7 +9,6 @@ function Review() {
   const dataInfo = useSelector((state) => state.data.data);
   const [sort, setSort] = useState(0);
   const [view, setView] = useState("grid");
-
   return (
     <Wrapper>
       <Header />
@@ -26,6 +25,9 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   max-width: 420px;
   margin: 0 auto;
-  /* height: 100vh; */
-  overflow: hidden;
+  height: 100vh;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
