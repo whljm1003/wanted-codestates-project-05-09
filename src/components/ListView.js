@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { increaseLike, decreaseLike } from "../store/dataSlice";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
@@ -8,7 +8,8 @@ import { FaStar } from "react-icons/fa";
 import Loader from "./Loader";
 
 const star = [1, 2, 3, 4, 5];
-function ListView({ data, isLoading }) {
+function ListView({ data }) {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
@@ -21,6 +22,12 @@ function ListView({ data, isLoading }) {
   const shareHandler = (e) => {
     console.log("공유해랏!");
   };
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
   return (
     <Wrapper>

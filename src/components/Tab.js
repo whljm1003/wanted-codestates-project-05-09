@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { BsGrid3X3 } from "react-icons/bs";
 import { TiThListOutline } from "react-icons/ti";

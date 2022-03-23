@@ -1,14 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { increaseLike, decreaseLike } from "../store/dataSlice";
+import { increaseLike, decreaseLike, filterId } from "../store/dataSlice";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import Loader from "./Loader";
+import { useParams } from "react-router-dom";
 
 const star = [1, 2, 3, 4, 5];
-function ListView({ item }) {
+
+function ListView() {
+  const [item, setItem] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const id = useParams();
+  const dataInfo = useSelector((state) => state.data.data);
   const dispatch = useDispatch();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
@@ -16,26 +22,28 @@ function ListView({ item }) {
       day: "numeric",
       year: "numeric",
     });
-  const [isLoading, setIsLoading] = useState(false);
   const increase = (id) => dispatch(increaseLike(id));
   const decrease = (id) => dispatch(decreaseLike(id));
+
   const shareHandler = (e) => {
     console.log("공유해랏!");
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
+  useEffect(() => {
+    const data = dataInfo.filter((item) => item.id === id.id);
+    setItem(data[0]);
+  }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
   return (
     <>
       <Wrapper>
+        {isLoading && <Loader />}
         <Img src={item.productImg} />
         <Info>
           <LikeSection>
@@ -76,6 +84,7 @@ export default ListView;
 
 const Wrapper = styled.div`
   width: 100%;
+  position: relative;
 `;
 const Img = styled.img`
   width: 100%;

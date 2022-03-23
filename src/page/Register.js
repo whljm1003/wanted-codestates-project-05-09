@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addReview } from "../store/dataSlice";
-import { FaStar } from "react-icons/fa";
 import Stars from "../components/Stars";
 
 function Register() {
@@ -172,12 +171,7 @@ const Rating = styled.div`
   ${({ theme }) => theme.common.flexRow};
   margin: 0.3rem;
 `;
-const Star = styled(FaStar)`
-  font-size: 3.5rem;
-  margin-right: 0.7rem;
-  color: ${({ theme }) => theme.colors.lightGrey};
-  cursor: pointer;
-`;
+
 const Btn = styled.button`
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.black};

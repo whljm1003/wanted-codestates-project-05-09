@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./GlobalStyle";
 import theme from "./theme";
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Review />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/detail" element={<Detatil />} />
+          <Route path="/detail/:id" element={<Detatil />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

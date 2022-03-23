@@ -3,6 +3,7 @@ import data from "../assets/data";
 
 const initialState = {
   data: data,
+  filterData: null,
 };
 
 const dataSlice = createSlice({
@@ -62,11 +63,21 @@ const dataSlice = createSlice({
           return state.data;
       }
     },
+    filterId: (state, action) => {
+      const id = action.payload;
+      state.filterData = state.data.filter((item) => item.id === id);
+    },
     addComment(state, action) {},
   },
 });
 
-export const { increaseLike, decreaseLike, addReview, sortedData, addComment } =
-  dataSlice.actions;
+export const {
+  increaseLike,
+  decreaseLike,
+  addReview,
+  sortedData,
+  filterId,
+  addComment,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;

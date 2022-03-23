@@ -3,16 +3,17 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "./Loader";
 
-function GridView({ data, isLoading }) {
+function GridView({ data }) {
   const [list, setList] = useState(data.slice(0, 20));
+  const [isLoading, setIsLoading] = useState(false);
   const loadRef = useRef(null);
   const observerRef = useRef(null);
   const navigate = useNavigate();
 
-  const getMoreItem = async () => {
+  const getMoreItem = useCallback(async () => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setList((list) => list.concat(data.slice(list.length, list.length + 10)));
-  };
+  }, [data]);
 
   const onIntersect = useCallback(
     async (entry, observer) => {
@@ -22,11 +23,10 @@ function GridView({ data, isLoading }) {
         observer.observe(entry[0].target);
       }
     },
-    [list]
+    [getMoreItem]
   );
   const ClickedItem = (item) => {
-    // console.log("check");
-    navigate("/detail");
+    navigate(`/detail/${item.id}`);
   };
 
   useEffect(() => {
@@ -43,6 +43,12 @@ function GridView({ data, isLoading }) {
     setList(data.slice(0, 20));
   }, [data]);
 
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
   return (
     <Wrapper>
       {isLoading && <Loader />}
