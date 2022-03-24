@@ -6,39 +6,44 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import ShareModal from "./ShareModal";
 
 const star = [1, 2, 3, 4, 5];
 
 function ItemDetail() {
   const [item, setItem] = useState({});
   const [comment, setComment] = useState("");
-  const id = useParams();
+  const [isShareModal, setIsShareModal] = useState(false);
   const dataInfo = useSelector((state) => state.data.data);
   const dispatch = useDispatch();
+  const id = useParams();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
       month: "long",
       day: "numeric",
       year: "numeric",
     });
+  // 좋아요 기능
   const increase = (id) => dispatch(increaseLike(id));
   const decrease = (id) => dispatch(decreaseLike(id));
-  const shareHandler = (e) => {
-    console.log("공유해랏!");
-  };
+  // 공유하기 모달 오픈
+  const openModal = () => setIsShareModal(true);
+  // url id 값으로 데이터 찾기
   const getItem = () => {
     const data = dataInfo.filter((item) => item.id === id.id);
     setItem(data[0]);
   };
+  // 댓글 상태 관리
   const commnetHandler = (e) => {
     setComment(e.target.value);
   };
+  // 댓글 리덕스 상태에 추가
   const addComment = (e) => {
     e.preventDefault();
     dispatch(addComments({ id, comment }));
     setComment("");
   };
-
+  // 댓글 추가 되면 리덕스 다시 호출
   useEffect(() => {
     getItem();
   }, [item, dataInfo]);
@@ -46,6 +51,7 @@ function ItemDetail() {
   return (
     <>
       <Wrapper>
+        {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
         <Img src={item?.productImg} />
         <Info>
           <LikeSection>
@@ -60,7 +66,7 @@ function ItemDetail() {
               <span>{item?.likeCnt}</span>
             </div>
             <div className="right">
-              <ShareIcon onClick={shareHandler}>
+              <ShareIcon onClick={openModal}>
                 <BsShareFill />
               </ShareIcon>
             </div>
@@ -100,7 +106,6 @@ function ItemDetail() {
     </>
   );
 }
-
 export default ItemDetail;
 
 const Wrapper = styled.div`

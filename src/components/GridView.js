@@ -9,7 +9,11 @@ function GridView({ data }) {
   const loadRef = useRef(null);
   const observerRef = useRef(null);
   const navigate = useNavigate();
-
+  // 상세 페이지 이동
+  const ClickedItem = (item) => {
+    navigate(`/detail/${item.id}`);
+  };
+  // 무한 스크롤
   const getMoreItem = useCallback(async () => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setList((list) => list.concat(data.slice(list.length, list.length + 10)));
@@ -25,9 +29,6 @@ function GridView({ data }) {
     },
     [getMoreItem]
   );
-  const ClickedItem = (item) => {
-    navigate(`/detail/${item.id}`);
-  };
 
   useEffect(() => {
     if (loadRef.current) {

@@ -55,7 +55,7 @@ const Title = styled.div`
   cursor: pointer;
   .logo {
     width: 10rem;
-    height: 1.7rem;
+    height: 1.6rem;
   }
 `;
 const Btn = styled.button`

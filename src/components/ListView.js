@@ -6,10 +6,13 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import Loader from "./Loader";
+import ShareModal from "./ShareModal";
 
 const star = [1, 2, 3, 4, 5];
+
 function ListView({ data }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isShareModal, setIsShareModal] = useState(false);
   const dispatch = useDispatch();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
@@ -17,11 +20,12 @@ function ListView({ data }) {
       day: "numeric",
       year: "numeric",
     });
+  // 좋아요 기능
   const increase = (id) => dispatch(increaseLike(id));
   const decrease = (id) => dispatch(decreaseLike(id));
-  const shareHandler = (e) => {
-    console.log("공유해랏!");
-  };
+  // 공유하기 모달 오픈
+  const shareHandler = () => setIsShareModal(true);
+  // 로딩
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
@@ -32,6 +36,7 @@ function ListView({ data }) {
   return (
     <Wrapper>
       {isLoading && <Loader />}
+      {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
       {data.map((item, index) => (
         <Container key={index}>
           <Img src={item.productImg} />
@@ -70,7 +75,6 @@ function ListView({ data }) {
     </Wrapper>
   );
 }
-
 export default ListView;
 
 const Wrapper = styled.div`
