@@ -18,7 +18,7 @@ function Detail() {
 
   return (
     <Wrapper>
-      <Header />
+      <Header isDetail={true} />
       <ItemDetail item={item} />
     </Wrapper>
   );

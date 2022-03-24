@@ -11,12 +11,12 @@ const data = [
     likeCnt: 244,
     comments: [
       {
-        commentId: "9bed99f4-9ab9-11ec-b909-0242ac120002",
-        comment: "가방 정보 알 수 있을까요?",
+        commentId: "37318832-9ab8-11ec-b",
+        comment: "가방 정보 알 수 123?",
       },
       {
-        commentId: "9bed981e-9ab9-11ec-b909-0242ac120002",
-        comment: "선물 받은거라 ㅠㅜ 죄송합니다",
+        commentId: "9bed981e-9ab9-11ec-b909-0242ac120002123",
+        comment: "선물 받은거라 ㅠㅜ 123",
       },
     ],
   },

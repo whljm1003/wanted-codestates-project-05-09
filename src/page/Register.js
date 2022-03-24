@@ -54,7 +54,7 @@ function Register() {
   return (
     <Wrapper>
       <Header />
-      <Form submit={submit}>
+      <Form onSubmit={submit}>
         <Section>
           <Name>제목</Name>
           <Title

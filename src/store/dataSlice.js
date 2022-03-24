@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import data from "../assets/data";
+import { v1 as userId } from "uuid";
 
 const initialState = {
   data: JSON.parse(window.localStorage.getItem("data")) || data,
@@ -44,31 +45,44 @@ const dataSlice = createSlice({
     },
     sortedData(state, action) {
       const index = action.payload;
-      const newdata = [...data];
+      const LastestData = [...data];
       switch (index) {
         case 0:
-          state.data = data;
+          state.data =
+            JSON.parse(window.localStorage.getItem("data")) || LastestData;
           break;
         case 1:
-          state.data = newdata.sort((a, b) => b.likeCnt - a.likeCnt);
+          state.data.sort((a, b) => b.likeCnt - a.likeCnt);
           break;
         case 2:
-          state.data = newdata.sort(
-            (a, b) => b.comments.length - a.comments.length
-          );
+          state.data.sort((a, b) => b.comments?.length - a.comments?.length);
           break;
         case 3:
-          state.data = newdata.sort(() => Math.random() - 0.5);
+          state.data.sort(() => Math.random() - 0.5);
           break;
         default:
-          return state.data;
+          state.data = LastestData;
+          break;
       }
     },
-    addComment(state, action) {},
+    addComments(state, action) {
+      const { id, comment } = action.payload;
+      const target = state.data.filter((data) => data.id === id.id);
+      target[0].comments.push({
+        commentId: userId(),
+        comment,
+      });
+      window.localStorage.setItem("data", JSON.stringify(state.data));
+    },
   },
 });
 
-export const { increaseLike, decreaseLike, addReview, sortedData, addComment } =
-  dataSlice.actions;
+export const {
+  increaseLike,
+  decreaseLike,
+  addReview,
+  sortedData,
+  addComments,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;
