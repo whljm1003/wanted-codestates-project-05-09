@@ -46,7 +46,7 @@ function ItemDetail() {
   return (
     <>
       <Wrapper>
-        <Img src={item.productImg} />
+        <Img src={item?.productImg} />
         <Info>
           <LikeSection>
             <div className="left">

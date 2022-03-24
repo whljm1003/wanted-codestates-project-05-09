@@ -8,10 +8,9 @@ import Stars from "../components/Stars";
 
 function Register() {
   const [review, setReview] = useState({
-    id: 0,
     productNm: "",
     review: "",
-    productImg: "",
+    productImg: [],
     reviewRate: 0,
     createDt: new Date().getTime(),
   });
@@ -20,37 +19,82 @@ function Register() {
   const imgRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // titleHandler
+  //오류메시지 상태저장
+  const [nameMessage, setNameMessage] = useState("");
+  const [reviewMessage, setReviewMessage] = useState("");
+  // 유효성 검사
+  const [nameValidation, setNameValidation] = useState(false);
+  const [reviewValidation, setReviewValidation] = useState(false);
+  const [imgValidation, setImgValidation] = useState(false);
+  const [rateValidation, setRateValidation] = useState(false);
+  const [store, setStore] = useState(false);
+  // 제목
   const titleHandler = (e) => {
     const { value } = e.target;
-    setReview({ ...review, id: value.charCodeAt(), productNm: value });
+    setReview({ ...review, productNm: value });
+    if (review.productNm.length < 5) {
+      setNameMessage("5글자 이상 작성해주세요");
+    } else {
+      setNameMessage("");
+      setNameValidation(true);
+    }
   };
-  // textHandler
-  const textHandler = (e) => setReview({ ...review, review: e.target.value });
-  // ratingHandler
-  const ratingHandler = (rating) =>
+  // 내용
+  const textHandler = (e) => {
+    setReview({ ...review, review: e.target.value });
+    if (review.review.length < 20) {
+      setReviewMessage("20글자 이상 작성해주세요");
+    } else {
+      setReviewMessage("");
+      setReviewValidation(true);
+    }
+  };
+  // 별점
+  const ratingHandler = (rating) => {
     setReview({ ...review, reviewRate: rating });
-  // imgHandler
+    setRateValidation(true);
+  };
+  // 이미지
   const imgHandler = (e) => {
     e.preventDefault();
     imgRef.current.click();
   };
+  // 이미지 저장
   const saveFileImage = (e) => {
+    const { files } = e.target;
     setReview({
       ...review,
-      productImg: URL.createObjectURL(e.target.files[0]),
+      productImg: [URL.createObjectURL(files[0])],
     });
+    setImgValidation(true);
   };
-  // submit
+  // 리뷰 등록하기
   const submit = (e) => {
     e.preventDefault();
-    dispatch(addReview(review));
-    navigate("/");
+    if (!store) {
+      alert("필수항목을 입력해주세요");
+    } else {
+      dispatch(addReview(review));
+      navigate("/");
+    }
   };
-  // test useEfeect
+  // 유효성 검사
   useEffect(() => {
-    console.log(review);
-  }, [review]);
+    if (nameValidation && reviewValidation && imgValidation && rateValidation) {
+      setStore(true);
+    }
+  }, [
+    review,
+    nameValidation,
+    reviewValidation,
+    imgValidation,
+    rateValidation,
+    store,
+  ]);
+  // test useEfeect
+  // useEffect(() => {
+  //   console.log(review);
+  // }, [review]);
   return (
     <Wrapper>
       <Header />
@@ -62,7 +106,9 @@ function Register() {
             maxLength={30}
             placeholder="리뷰 제목을 작성해주세요"
             onChange={titleHandler}
+            nameMessage={nameMessage}
           />
+          <AlertMessage>{nameMessage}</AlertMessage>
         </Section>
         <Section>
           <Name>내용</Name>
@@ -71,18 +117,24 @@ function Register() {
             maxLength={250}
             placeholder="리뷰 내용을 작성해주세요"
             onChange={textHandler}
+            reviewMessage={reviewMessage}
           />
+          <AlertMessage>{reviewMessage}</AlertMessage>
         </Section>
         <ImgSection>
-          {review.productImg && (
-            <Preview alt="preview" src={review.productImg} />
-          )}
+          <Preview>
+            {review.productImg.length >= 1 &&
+              review.productImg.map((img, index) => (
+                <Img alt="preview" key={index} src={img} />
+              ))}
+          </Preview>
           <input
             style={{ display: "none" }}
             ref={imgRef}
             type="file"
             accept="image/*"
             onChange={saveFileImage}
+            multiple
           />
           <Btn onClick={imgHandler}>이미지 업로드</Btn>
         </ImgSection>
@@ -97,11 +149,14 @@ function Register() {
                 hoverRating={hoverRating}
                 setHoverRating={setHoverRating}
                 ratingHandler={ratingHandler}
+                setRateValidation={setRateValidation}
               />
             ))}
           </Rating>
         </Section>
-        <Btn onClick={submit}>리뷰 등록하기</Btn>
+        <Btn store={store} onClick={submit}>
+          리뷰 등록하기
+        </Btn>
       </Form>
     </Wrapper>
   );
@@ -123,6 +178,9 @@ const Form = styled.form`
 `;
 const Section = styled.div`
   width: 100%;
+  &:nth-child(2) {
+    margin-top: 1rem;
+  }
 `;
 const Name = styled.label`
   display: block;
@@ -133,18 +191,19 @@ const Name = styled.label`
 const Title = styled.input`
   display: block;
   outline-color: ${({ theme }) => theme.colors.black};
-  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border: 1px solid
+    ${({ theme, nameMessage }) => (nameMessage ? "red" : theme.colors.grey)};
   box-sizing: border-box;
   border-radius: 5px;
   width: 100%;
   height: 2.5rem;
   padding: 0.5rem;
-  margin-bottom: 1rem;
   font-size: 1rem;
 `;
 const Contents = styled.textarea`
   box-sizing: border-box;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border: 1px solid
+    ${({ theme, reviewMessage }) => (reviewMessage ? "red" : theme.colors.grey)};
   outline-color: ${({ theme }) => theme.colors.black};
   border-radius: 5px;
   width: 100%;
@@ -161,10 +220,14 @@ const ImgSection = styled.div`
   margin-top: 1rem;
   width: 100%;
 `;
-const Preview = styled.img`
+const Preview = styled.div`
   ${({ theme }) => theme.common.flexRow};
-  width: 40%;
+  width: 100%;
+`;
+const Img = styled.img`
+  width: 6rem;
   border-radius: 50%;
+  margin-right: 0.5rem;
 `;
 
 const Rating = styled.div`
@@ -182,4 +245,11 @@ const Btn = styled.button`
   width: 100%;
   height: 3rem;
   margin: 1rem 0;
+  opacity: ${({ store }) => store === false && "0.4"};
+`;
+
+const AlertMessage = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  margin: 0.5rem;
 `;

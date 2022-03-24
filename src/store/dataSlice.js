@@ -33,7 +33,7 @@ const dataSlice = createSlice({
     addReview(state, action) {
       const newItem = action.payload;
       state.data.unshift({
-        id: newItem.id,
+        id: userId(),
         productNm: newItem.productNm,
         productImg: newItem.productImg,
         createDt: newItem.createDt,
