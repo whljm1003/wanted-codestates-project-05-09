@@ -88,19 +88,17 @@ const GridContainer = styled.div`
   align-items: center;
   margin-bottom: 16px;
 `;
+
 const URLShareButton = styled.button`
   width: 48px;
   height: 48px;
   color: white;
-  border-radius: 24px;
+  border-radius: 50%;
   border: 0px;
-  font-weight: 800;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
   background-color: #7362ff;
-  &:hover {
-    background-color: #a99fee;
-  }
 `;
 const KakaoShareButton = styled.a`
   cursor: pointer;
