@@ -6,6 +6,7 @@ import Loader from "./Loader";
 function GridView({ data }) {
   const [list, setList] = useState(data.slice(0, 20));
   const [isLoading, setIsLoading] = useState(false);
+  const [isScroll, setIsScroll] = useState(false);
   const loadRef = useRef(null);
   const observerRef = useRef(null);
   const navigate = useNavigate();
@@ -29,16 +30,20 @@ function GridView({ data }) {
   );
 
   useEffect(() => {
+    setIsScroll(true);
     if (loadRef.current) {
       observerRef.current = new IntersectionObserver(onIntersect, {
         threshold: 0.4,
       });
-      observerRef.current.observe(loadRef.current);
+      if (isScroll) {
+        observerRef.current.observe(loadRef.current);
+      }
     }
     return () => {
+      setIsScroll(false);
       observerRef.current && observerRef.current.disconnect();
     };
-  }, [onIntersect]);
+  }, [isScroll, onIntersect]);
 
   useEffect(() => {
     setList(data.slice(0, 20));
@@ -50,6 +55,7 @@ function GridView({ data }) {
       setIsLoading(false);
     }, 1000);
   }, []);
+
   return (
     <Wrapper>
       {isLoading && <Loader />}
@@ -90,7 +96,6 @@ const Wrapper = styled.div`
     height: 100%;
   }
 `;
-
 const Load = styled.div`
   bottom: 0;
   display: block;

@@ -59,7 +59,7 @@ const Title = styled.div`
   }
 `;
 const Btn = styled.button`
-  width: 4.5rem;
+  width: 5rem;
   height: 2rem;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.black};

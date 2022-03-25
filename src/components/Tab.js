@@ -11,7 +11,6 @@ function Tab({ sort, setSort, view, setView }) {
     setSort(index);
     dispatch(sortedData(index));
   };
-
   const changeTab = (tab) => setView(tab);
   return (
     <>
@@ -48,6 +47,7 @@ const SortSeciton = styled.div`
 const SortTab = styled.button`
   ${({ theme }) => theme.common.flexRow}
   border: 1.8px solid ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.black};
   border-radius: 50px;
   font-size: 1rem;
   font-weight: 800;

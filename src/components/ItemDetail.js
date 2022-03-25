@@ -86,10 +86,10 @@ function ItemDetail() {
           <div className="date">{date(item?.createDt)}</div>
         </Info>
         <CommentsSection onSubmit={addComment}>
-          {item.comments?.map((comment) => (
-            <div className="section" key={comment.commentId}>
+          {item.comments?.map((comment, index) => (
+            <div className="commentSection" key={index}>
               <span className="commentsId">
-                {comment.commentId.slice(0, 8)}
+                {comment.commentId?.slice(0, 8)}
               </span>
               <span className="comment">{comment.comment}</span>
             </div>
@@ -114,7 +114,6 @@ const Wrapper = styled.div`
   width: 100%;
   position: relative;
 `;
-
 const Info = styled.div`
   margin: 1rem 0;
   padding: 1rem;
@@ -173,7 +172,7 @@ const Star = styled(FaStar)`
 `;
 const CommentsSection = styled.div`
   font-size: 1.2rem;
-  .section {
+  .commentSection {
     display: flex;
     align-items: center;
     margin-bottom: 0.3rem;
@@ -195,7 +194,6 @@ const Form = styled.form`
   ${({ theme }) => theme.common.flexRow}
   margin: 2rem 0;
 `;
-
 const Input = styled.input`
   width: 60%;
   line-height: 3rem;

@@ -65,6 +65,9 @@ function Register() {
     const newImageURL = [];
     const maxLength = 4;
     for (let i = 0; i < maxLength; i += 1) {
+      if (files[i] === undefined) {
+        break;
+      }
       const nowImageUrl = URL.createObjectURL(files[i]);
       newImageURL.push(nowImageUrl);
     }
@@ -97,7 +100,7 @@ function Register() {
     rateValidation,
     store,
   ]);
-  // test useEfeect
+
   useEffect(() => {
     console.log(review);
   }, [review]);
@@ -253,7 +256,6 @@ const Btn = styled.button`
   margin: 1rem 0;
   opacity: ${({ store }) => store === false && "0.4"};
 `;
-
 const AlertMessage = styled.div`
   color: red;
   font-size: 0.8rem;

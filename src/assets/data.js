@@ -11,7 +11,20 @@ const data = [
     createDt: 1648192696009,
     review: "리뷰 테스트 중입니다!!!!!",
     reviewRate: 3,
-    comments: [],
+    comments: [
+      {
+        commentId: "9bed8c34-9ab9-11ec-b909-0242ac120002",
+        comment: "내부 수납공간은 어떤가요?",
+      },
+      {
+        nestedtId: "9bed8acc-9ab9-11ec-b909-0242ac120002",
+        nestedComment: "크기에 비해서 수납공간이 많은 것 같아요!",
+      },
+      {
+        nestedtId: "9bed891e-9ab9-11ec-b909-0242ac120002",
+        nestedComment: "감사합니다~!",
+      },
+    ],
   },
   {
     id: "37318832-9ab8-11ec-b909-0242ac120002",

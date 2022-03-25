@@ -32,7 +32,6 @@ const Wrapper = styled.div`
   max-width: 600px;
   margin: 0 auto;
 `;
-
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   max-width: 420px;
