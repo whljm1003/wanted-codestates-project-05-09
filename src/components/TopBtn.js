@@ -21,12 +21,13 @@ function TopBtn({ container }) {
     setBtnStatus(false);
   };
   useEffect(() => {
+    const current = container.current;
     const watch = () => {
-      container.current.addEventListener("scroll", handleFollow);
+      current.addEventListener("scroll", handleFollow);
     };
     watch();
     return () => {
-      container.current?.removeEventListener("scroll", handleFollow);
+      current.removeEventListener("scroll", handleFollow);
     };
   });
 

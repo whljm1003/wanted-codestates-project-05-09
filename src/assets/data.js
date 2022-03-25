@@ -1,26 +1,5 @@
 const data = [
   {
-    id: "1",
-    productNm: "블랙 핸드백",
-    productImg: [
-      "https://i.balaan.io/review/c836c897ce27f22497d14d8e9f461ece.webp",
-    ],
-    createDt: 1645401600,
-    review: "무난하게 데일리로 활용중입니다.",
-    reviewRate: 1,
-    likeCnt: 244,
-    comments: [
-      {
-        commentId: "37318832-9ab8-11ec-b",
-        comment: "가방 정보 알 수 123?",
-      },
-      {
-        commentId: "9bed981e-9ab9-11ec-b909-0242ac120002123",
-        comment: "선물 받은거라 ㅠㅜ 123",
-      },
-    ],
-  },
-  {
     id: "37318832-9ab8-11ec-b909-0242ac120002",
     productNm: "메종키츠네 맨투맨 WHITE",
     productImg: [

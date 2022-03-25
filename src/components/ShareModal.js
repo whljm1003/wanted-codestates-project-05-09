@@ -27,7 +27,7 @@ function ShareModal({ setIsShareModal }) {
   useEffect(() => {
     if (status === "ready" && window.Kakao) {
       if (!window.Kakao.isInitialized()) {
-        window.Kakao.init("fb48f24a6a8c2f164e87c39475126cb7");
+        window.Kakao.init(`${process.env.REACT_APP_JAVASCRIPT_KEY}`);
       }
     }
   }, [status]);

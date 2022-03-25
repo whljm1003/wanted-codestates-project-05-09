@@ -8,26 +8,26 @@ function GridView({ data }) {
   const [isLoading, setIsLoading] = useState(false);
   const loadRef = useRef(null);
   const observerRef = useRef(null);
+
   const navigate = useNavigate();
   // 상세 페이지 이동
   const ClickedItem = (item) => {
     navigate(`/detail/${item.id}`);
   };
-  // 무한 스크롤
-  const getMoreItem = useCallback(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setList((list) => list.concat(data.slice(list.length, list.length + 10)));
-  }, [data]);
 
+  // 무한 스크롤
   const onIntersect = useCallback(
     async (entry, observer) => {
       if (entry[0].isIntersecting) {
         observer.unobserve(entry[0].target);
-        await getMoreItem();
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        setList((list) =>
+          list.concat(data.slice(list.length, list.length + 20))
+        );
         observer.observe(entry[0].target);
       }
     },
-    [getMoreItem]
+    [data]
   );
 
   useEffect(() => {
@@ -37,7 +37,9 @@ function GridView({ data }) {
       });
       observerRef.current.observe(loadRef.current);
     }
-    return () => observerRef.current && observerRef.current.disconnect();
+    return () => {
+      observerRef.current && observerRef.current.disconnect();
+    };
   }, [onIntersect]);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ function GridView({ data }) {
           <img className="photo" alt="img" src={item.productImg} />
         </div>
       ))}
-      <Load ref={loadRef}></Load>
+      <Load ref={loadRef} />
     </Wrapper>
   );
 }
