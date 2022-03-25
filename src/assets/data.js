@@ -3,26 +3,27 @@ const data = [
     id: "0f849e50-ac0b-11ec-871f-3149f0357cf2",
     likeCnt: 0,
     productImg: [
-      "https://i.balaan.io/review/6df473369c3876d9f6121c7cfe391785.webp",
-      "https://i.balaan.io/review/6df473369c3876d9f6121c7cfe391785.webp",
-      "https://i.balaan.io/review/6df473369c3876d9f6121c7cfe391785.webp",
+      "https://i.balaan.io/review/2655beb27d4d4bb933cb13921eac41de_800.webp",
+      "https://i.balaan.io/review/21eb8dc4949ce84b3c2717a430b5692d_800.webp",
+      "https://i.balaan.io/review/b3c4ca93f447d5f6e047d951ef04bf20_800.webp",
     ],
-    productNm: "리뷰 테스트",
+    productNm: "프라다 가방",
     createDt: 1648192696009,
-    review: "리뷰 테스트 중입니다!!!!!",
-    reviewRate: 3,
+    review:
+      "역시 믿고 구매하는 발란입니다!! 단 한번도 실망을 시키지 않았어요!!",
+    reviewRate: 5,
     comments: [
       {
         commentId: "9bed8c34-9ab9-11ec-b909-0242ac120002",
-        comment: "내부 수납공간은 어떤가요?",
+        comment: "가방 너무 이쁜데 품번 좀 알수있을까요??",
       },
       {
         nestedtId: "9bed8acc-9ab9-11ec-b909-0242ac120002",
-        nestedComment: "크기에 비해서 수납공간이 많은 것 같아요!",
+        nestedComment: "내부 수납이 어떻게 되는지 궁금해요!!",
       },
       {
         nestedtId: "9bed891e-9ab9-11ec-b909-0242ac120002",
-        nestedComment: "감사합니다~!",
+        nestedComment: "품번 좀 가르켜주세요!",
       },
     ],
   },
