@@ -186,8 +186,9 @@ const CommentsSection = styled.div`
   }
   .comment {
     color: ${({ theme }) => theme.colors.darkGrey};
-    font-weight: 5200;
+    font-weight: 500;
     font-size: 1rem;
+    margin-right: 0.5rem;
   }
 `;
 const Form = styled.form`
