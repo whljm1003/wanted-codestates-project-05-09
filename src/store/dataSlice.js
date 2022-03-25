@@ -3,7 +3,9 @@ import data from "../assets/data";
 import { v1 as userId } from "uuid";
 
 const initialState = {
-  data: JSON.parse(window.localStorage.getItem("data")) || data,
+  data:
+    JSON.parse(window.sessionStorage.getItem("data")) ||
+    data.sort((a, b) => b.createDt - a.createDt),
 };
 
 const dataSlice = createSlice({
@@ -18,7 +20,7 @@ const dataSlice = createSlice({
           item.clicked = true;
         }
       });
-      window.localStorage.setItem("data", JSON.stringify(state.data));
+      window.sessionStorage.setItem("data", JSON.stringify(state.data));
     },
     decreaseLike(state, action) {
       const id = action.payload;
@@ -28,7 +30,7 @@ const dataSlice = createSlice({
           item.clicked = false;
         }
       });
-      window.localStorage.setItem("data", JSON.stringify(state.data));
+      window.sessionStorage.setItem("data", JSON.stringify(state.data));
     },
     addReview(state, action) {
       const newItem = action.payload;
@@ -39,17 +41,17 @@ const dataSlice = createSlice({
         createDt: newItem.createDt,
         review: newItem.review,
         reviewRate: newItem.reviewRate,
+        comments: [],
         likeCnt: 0,
       });
-      window.localStorage.setItem("data", JSON.stringify(state.data));
+      window.sessionStorage.setItem("data", JSON.stringify(state.data));
     },
     sortedData(state, action) {
       const index = action.payload;
       const LastestData = [...data];
       switch (index) {
         case 0:
-          state.data =
-            JSON.parse(window.localStorage.getItem("data")) || LastestData;
+          state.data.sort((a, b) => b.createDt - a.createDt);
           break;
         case 1:
           state.data.sort((a, b) => b.likeCnt - a.likeCnt);
@@ -72,7 +74,7 @@ const dataSlice = createSlice({
         commentId: userId(),
         comment,
       });
-      window.localStorage.setItem("data", JSON.stringify(state.data));
+      window.sessionStorage.setItem("data", JSON.stringify(state.data));
     },
   },
 });
