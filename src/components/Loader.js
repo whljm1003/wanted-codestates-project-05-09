@@ -21,6 +21,7 @@ const LoaderWrap = styled.div`
   text-align: center;
   align-items: center;
   position: absolute;
+  z-index: 999;
 `;
 const Container = styled.div`
   border-radius: 12px;

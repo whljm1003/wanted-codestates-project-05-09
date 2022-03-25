@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { increaseLike, decreaseLike, addComments } from "../store/dataSlice";
@@ -30,10 +30,11 @@ function ItemDetail() {
   // 공유하기 모달 오픈
   const openModal = () => setIsShareModal(true);
   // url id 값으로 데이터 찾기
-  const getItem = () => {
-    const data = dataInfo.filter((item) => item.id === id.id);
+  const getItem = useCallback(() => {
+    const tempData = [...dataInfo];
+    const data = tempData.filter((item) => item.id === id.id);
     setItem(data[0]);
-  };
+  }, [dataInfo, id.id]);
   // 댓글 상태 관리
   const commnetHandler = (e) => {
     setComment(e.target.value);
@@ -47,13 +48,12 @@ function ItemDetail() {
   // 댓글 추가 되면 리덕스 다시 호출
   useEffect(() => {
     getItem();
-  }, [item, dataInfo]);
+  }, [getItem]);
 
   return (
     <>
       <Wrapper>
         {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
-        {/* <Img src={item?.productImg} /> */}
         <Carousel id={id.id} imgData={item?.productImg} />
         <Info>
           <LikeSection>

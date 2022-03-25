@@ -101,9 +101,6 @@ function Register() {
     store,
   ]);
 
-  useEffect(() => {
-    console.log(review);
-  }, [review]);
   return (
     <Wrapper>
       <Header />

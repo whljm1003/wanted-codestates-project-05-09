@@ -32,7 +32,7 @@ function ListView({ data }) {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 1500);
   }, []);
 
   return (
@@ -41,7 +41,7 @@ function ListView({ data }) {
       {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
       {data.map((item, index) => (
         <Container key={index}>
-          <Carousel id={item.id} imgData={item.productImg} />
+          <Carousel imgData={item.productImg} />
           <Info>
             <LikeSection>
               <div className="left">
@@ -86,7 +86,6 @@ const Wrapper = styled.div`
 const Container = styled.div`
   width: 100%;
   z-index: -10;
-  cursor: pointer;
 `;
 const Info = styled.div`
   margin: 1rem 0;

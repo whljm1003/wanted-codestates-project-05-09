@@ -3,24 +3,13 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useNavigate } from "react-router-dom";
 
-export const Carousel = ({ id, imgData }) => {
-  const navigate = useNavigate();
-  // 디테일 페이지 이동
-  const goToDetail = (id) => {
-    navigate(`/detail/${id}`);
-  };
+export const Carousel = ({ imgData }) => {
   return (
     <Container>
       <StyledSlider {...settings}>
         {imgData?.map((imgItem) => (
-          <img
-            alt="img"
-            key={imgItem}
-            src={imgItem}
-            onClick={() => goToDetail(id)}
-          />
+          <img alt="img" key={imgItem} src={imgItem} />
         ))}
       </StyledSlider>
     </Container>
