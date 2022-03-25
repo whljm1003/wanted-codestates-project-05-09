@@ -8,13 +8,11 @@ function GridView({ data }) {
   const [isLoading, setIsLoading] = useState(false);
   const loadRef = useRef(null);
   const observerRef = useRef(null);
-
   const navigate = useNavigate();
   // 상세 페이지 이동
   const ClickedItem = (item) => {
     navigate(`/detail/${item.id}`);
   };
-
   // 무한 스크롤
   const onIntersect = useCallback(
     async (entry, observer) => {
@@ -22,7 +20,7 @@ function GridView({ data }) {
         observer.unobserve(entry[0].target);
         await new Promise((resolve) => setTimeout(resolve, 500));
         setList((list) =>
-          list.concat(data.slice(list.length, list.length + 20))
+          list.concat(data.slice(list.length, list.length + 10))
         );
         observer.observe(entry[0].target);
       }

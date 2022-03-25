@@ -8,7 +8,6 @@ const Stars = ({
   hoverRating,
   setHoverRating,
   ratingHandler,
-  setRateValidation,
 }) => {
   const onMouseEnter = (index) => setHoverRating(index);
   const onMouseLeave = () => setHoverRating(0);

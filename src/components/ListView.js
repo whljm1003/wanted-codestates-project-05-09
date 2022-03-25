@@ -44,8 +44,8 @@ function ListView({ data }) {
       {isLoading && <Loader />}
       {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
       {data.map((item, index) => (
-        <Container key={index} onClick={() => goToDetail(item.id)}>
-          <Img src={item.productImg} />
+        <Container key={index}>
+          <Img src={item.productImg} onClick={() => goToDetail(item.id)} />
           <Info>
             <LikeSection>
               <div className="left">
