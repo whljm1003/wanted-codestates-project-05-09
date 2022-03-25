@@ -2,9 +2,6 @@
 
 .env
 
-#crawling
-/crawling.js
-
 # dependencies
 /node_modules
 /.pnp

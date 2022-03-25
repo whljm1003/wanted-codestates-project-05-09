@@ -7,6 +7,7 @@ import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import ShareModal from "./ShareModal";
+import { Carousel } from "./Carousel";
 
 const star = [1, 2, 3, 4, 5];
 
@@ -52,7 +53,8 @@ function ItemDetail() {
     <>
       <Wrapper>
         {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
-        <Img src={item?.productImg} />
+        {/* <Img src={item?.productImg} /> */}
+        <Carousel id={id.id} imgData={item?.productImg} />
         <Info>
           <LikeSection>
             <div className="left">
@@ -112,9 +114,7 @@ const Wrapper = styled.div`
   width: 100%;
   position: relative;
 `;
-const Img = styled.img`
-  width: 100%;
-`;
+
 const Info = styled.div`
   margin: 1rem 0;
   padding: 1rem;

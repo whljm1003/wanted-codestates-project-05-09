@@ -42,8 +42,8 @@ function Register() {
   // 내용
   const textHandler = (e) => {
     setReview({ ...review, review: e.target.value });
-    if (review.review.length < 20) {
-      setReviewMessage("20글자 이상 작성해주세요");
+    if (review.review.length < 10) {
+      setReviewMessage("10글자 이상 작성해주세요");
     } else {
       setReviewMessage("");
       setReviewValidation(true);
@@ -62,9 +62,15 @@ function Register() {
   // 이미지 저장
   const saveFileImage = (e) => {
     const { files } = e.target;
+    const newImageURL = [];
+    const maxLength = 4;
+    for (let i = 0; i < maxLength; i += 1) {
+      const nowImageUrl = URL.createObjectURL(files[i]);
+      newImageURL.push(nowImageUrl);
+    }
     setReview({
       ...review,
-      productImg: [URL.createObjectURL(files[0])],
+      productImg: newImageURL,
     });
     setImgValidation(true);
   };
@@ -92,9 +98,9 @@ function Register() {
     store,
   ]);
   // test useEfeect
-  // useEffect(() => {
-  //   console.log(review);
-  // }, [review]);
+  useEffect(() => {
+    console.log(review);
+  }, [review]);
   return (
     <Wrapper>
       <Header />

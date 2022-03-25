@@ -5,9 +5,9 @@ import { increaseLike, decreaseLike } from "../store/dataSlice";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsShareFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 import ShareModal from "./ShareModal";
+import { Carousel } from "./Carousel";
 
 const star = [1, 2, 3, 4, 5];
 
@@ -15,7 +15,6 @@ function ListView({ data }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isShareModal, setIsShareModal] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
       month: "long",
@@ -27,10 +26,7 @@ function ListView({ data }) {
   const decrease = (id) => dispatch(decreaseLike(id));
   // 공유하기 모달 오픈
   const shareHandler = () => setIsShareModal(true);
-  // 디테일 페이지 이동
-  const goToDetail = (id) => {
-    navigate(`/detail/${id}`);
-  };
+
   // 로딩
   useEffect(() => {
     setIsLoading(true);
@@ -45,7 +41,7 @@ function ListView({ data }) {
       {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
       {data.map((item, index) => (
         <Container key={index}>
-          <Img src={item.productImg} onClick={() => goToDetail(item.id)} />
+          <Carousel id={item.id} imgData={item.productImg} />
           <Info>
             <LikeSection>
               <div className="left">
@@ -87,14 +83,10 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
 `;
-
 const Container = styled.div`
   width: 100%;
   z-index: -10;
   cursor: pointer;
-`;
-const Img = styled.img`
-  width: 100%;
 `;
 const Info = styled.div`
   margin: 1rem 0;
@@ -140,7 +132,6 @@ const LikeSection = styled.div`
 const LikeIcon = styled.div`
   cursor: pointer;
 `;
-
 const ShareIcon = styled.div`
   cursor: pointer;
 `;

@@ -59,7 +59,11 @@ function GridView({ data }) {
           key={index}
           onClick={() => ClickedItem(item)}
         >
-          <img className="photo" alt="img" src={item.productImg} />
+          <img
+            className="photo"
+            alt={item.productImg[0]}
+            src={item.productImg[0]}
+          />
         </div>
       ))}
       <Load ref={loadRef} />
