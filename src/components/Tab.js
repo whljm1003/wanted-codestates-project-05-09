@@ -67,7 +67,6 @@ const ViewSection = styled.div`
   height: 3rem;
   margin: 0.5rem 0;
 `;
-
 const ViewTab = styled.span`
   ${({ theme }) => theme.common.flexRow}
   width: 50%;

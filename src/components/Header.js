@@ -66,7 +66,6 @@ const Btn = styled.button`
   font-weight: 700;
   cursor: pointer;
 `;
-
 const Span = styled.span`
   .x_icon {
     height: 1.7rem;

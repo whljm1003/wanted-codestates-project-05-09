@@ -14,6 +14,7 @@ const star = [1, 2, 3, 4, 5];
 function ListView({ data }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isShareModal, setIsShareModal] = useState(false);
+  const [isLike, setIsLike] = useState(false);
   const dispatch = useDispatch();
   const date = (createDt) =>
     new Date(createDt).toLocaleDateString("ko", {
@@ -21,19 +22,28 @@ function ListView({ data }) {
       day: "numeric",
       year: "numeric",
     });
-  // 좋아요 기능
-  const increase = (id) => dispatch(increaseLike(id));
-  const decrease = (id) => dispatch(decreaseLike(id));
+  // 좋아요 증가
+  const increase = (id) => {
+    setIsLike(true);
+    dispatch(increaseLike(id));
+  };
+  // 좋아요 감소
+  const decrease = (id) => {
+    setIsLike(true);
+    dispatch(decreaseLike(id));
+  };
   // 공유하기 모달 오픈
   const shareHandler = () => setIsShareModal(true);
-
   // 로딩
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-  }, []);
+    if (isLike === false) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+    setIsLike(false);
+  }, [data]);
 
   return (
     <Wrapper>

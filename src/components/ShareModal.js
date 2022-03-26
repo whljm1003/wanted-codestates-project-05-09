@@ -31,6 +31,7 @@ function ShareModal({ setIsShareModal }) {
       }
     }
   }, [status]);
+
   return (
     <Background ref={shareRef} onClick={closeModal}>
       <Share>
@@ -90,6 +91,7 @@ const GridContainer = styled.div`
 `;
 
 const URLShareButton = styled.button`
+  ${({ theme }) => theme.common.flexRow}
   width: 48px;
   height: 48px;
   color: white;

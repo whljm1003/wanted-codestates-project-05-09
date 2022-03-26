@@ -6,13 +6,11 @@ import "slick-carousel/slick/slick-theme.css";
 
 export const Carousel = ({ imgData }) => {
   return (
-    <Container>
-      <StyledSlider {...settings}>
-        {imgData?.map((imgItem) => (
-          <img alt="img" key={imgItem} src={imgItem} />
-        ))}
-      </StyledSlider>
-    </Container>
+    <StyledSlider {...settings}>
+      {imgData?.map((imgItem) => (
+        <img alt="img" key={imgItem} src={imgItem} />
+      ))}
+    </StyledSlider>
   );
 };
 const settings = {
@@ -24,9 +22,6 @@ const settings = {
   slidesToScroll: 1,
   centerPadding: "0px",
 };
-
-const Container = styled.div``;
-
 const StyledSlider = styled(Slider)`
   .slick-prev {
     left: 0px;

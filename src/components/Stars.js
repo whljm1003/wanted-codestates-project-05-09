@@ -11,7 +11,7 @@ const Stars = ({
 }) => {
   const onMouseEnter = (index) => setHoverRating(index);
   const onMouseLeave = () => setHoverRating(0);
-
+  // hover, onclick 이벤트
   const fillColor = useMemo(() => {
     if (hoverRating >= index) {
       return "#fbc531";

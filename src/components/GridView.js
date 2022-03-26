@@ -20,7 +20,7 @@ function GridView({ data }) {
     async (entry, observer) => {
       if (entry[0].isIntersecting) {
         observer.unobserve(entry[0].target);
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         setList((list) =>
           list.concat(data.slice(list.length, list.length + 10))
         );
@@ -29,7 +29,7 @@ function GridView({ data }) {
     },
     [data]
   );
-
+  // 무한 스크롤
   useEffect(() => {
     if (loadRef.current && !isLoading && list.length !== data.length) {
       setIsScroll(true);
@@ -45,17 +45,14 @@ function GridView({ data }) {
       observerRef.current && observerRef.current.disconnect();
     };
   }, [list, data, isScroll, isLoading, onIntersect]);
-
-  useEffect(() => {
-    setList(data.slice(0, 20));
-  }, [data]);
-
+  // 로딩
   useEffect(() => {
     setIsLoading(true);
+    setList(data.slice(0, 20));
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
-  }, []);
+    }, 1000);
+  }, [data]);
 
   return (
     <>
@@ -76,11 +73,13 @@ function GridView({ data }) {
           </div>
         ))}
       </Wrapper>
-      <Load ref={loadRef}>
-        {isScroll && !isLoading && (
-          <InfiniteLoading type="spin" color="#2f3640" />
-        )}
-      </Load>
+      {list.length !== data.length ? (
+        <Load ref={loadRef}>
+          {isScroll && !isLoading && (
+            <InfiniteLoading type="spin" color="#2f3640" />
+          )}
+        </Load>
+      ) : null}
     </>
   );
 }
