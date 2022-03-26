@@ -54,12 +54,10 @@ const Title = styled.div`
   display: inline-block;
   cursor: pointer;
   .logo {
-    width: 10rem;
     height: 1.6rem;
   }
 `;
 const Btn = styled.button`
-  width: 5rem;
   height: 2rem;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.black};

@@ -18,7 +18,7 @@ function Review() {
       <Container ref={container}>
         <Header />
         <Tab sort={sort} setSort={setSort} view={view} setView={setView} />
-        {view === "grid" && <GridView data={dataInfo} />}
+        {view === "grid" && <GridView data={dataInfo} container={container} />}
         {view === "list" && <ListView data={dataInfo} />}
       </Container>
       <TopBtn container={container} />

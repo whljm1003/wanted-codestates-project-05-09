@@ -29,10 +29,12 @@ const Container = styled.div``;
 
 const StyledSlider = styled(Slider)`
   .slick-prev {
-    display: none;
+    left: 0px;
+    z-index: -30;
   }
   .slick-next {
-    display: none;
+    right: 0px;
+    z-index: -30;
   }
   .slick-dots {
     bottom: 10px;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "./Loader";
+import ReactLoading from "react-loading";
 
 function GridView({ data }) {
   const [list, setList] = useState(data.slice(0, 20));
@@ -30,8 +31,8 @@ function GridView({ data }) {
   );
 
   useEffect(() => {
-    setIsScroll(true);
-    if (loadRef.current) {
+    if (loadRef.current && !isLoading && list.length !== data.length) {
+      setIsScroll(true);
       observerRef.current = new IntersectionObserver(onIntersect, {
         threshold: 0.4,
       });
@@ -43,7 +44,7 @@ function GridView({ data }) {
       setIsScroll(false);
       observerRef.current && observerRef.current.disconnect();
     };
-  }, [isScroll, onIntersect]);
+  }, [list, data, isScroll, isLoading, onIntersect]);
 
   useEffect(() => {
     setList(data.slice(0, 20));
@@ -53,38 +54,43 @@ function GridView({ data }) {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 1500);
   }, []);
 
   return (
-    <Wrapper>
-      {isLoading && <Loader />}
-      {list?.map((item, index) => (
-        <div
-          className="container"
-          key={index}
-          onClick={() => ClickedItem(item)}
-        >
-          <img
-            className="photo"
-            alt={item.productImg[0]}
-            src={item.productImg[0]}
-          />
-        </div>
-      ))}
-      <Load ref={loadRef} />
-    </Wrapper>
+    <>
+      <Wrapper>
+        {isLoading && <Loader />}
+        {list?.map((item, index) => (
+          <div
+            className="container"
+            key={index}
+            onClick={() => ClickedItem(item)}
+          >
+            <img
+              loading="lazy"
+              className="photo"
+              alt={item.productImg[0]}
+              src={item.productImg[0]}
+            />
+          </div>
+        ))}
+      </Wrapper>
+      <Load ref={loadRef}>
+        {isScroll && !isLoading && (
+          <InfiniteLoading type="spin" color="#2f3640" />
+        )}
+      </Load>
+    </>
   );
 }
 
 export default GridView;
-
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 2px;
   grid-row-gap: 2px;
-  height: 85vh;
   padding: 2px;
   position: relative;
   .container {
@@ -97,9 +103,13 @@ const Wrapper = styled.div`
   }
 `;
 const Load = styled.div`
-  bottom: 0;
-  display: block;
-  height: 50px;
+  ${({ theme }) => theme.common.flexRow};
   width: 100%;
-  z-index: 10;
+  height: 100px;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+const InfiniteLoading = styled(ReactLoading)`
+  width: 3rem;
+  height: 3rem;
+  z-index: 999;
 `;

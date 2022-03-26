@@ -52,6 +52,7 @@ const Btn = styled.button`
   border: 0;
   outline: 0;
   cursor: pointer;
+  z-index: 10;
 `;
 const Icon = styled(FaArrowCircleUp)`
   font-size: 2.5rem;

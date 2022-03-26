@@ -193,10 +193,12 @@ const CommentsSection = styled.div`
 const Form = styled.form`
   ${({ theme }) => theme.common.flexRow}
   margin: 2rem 0;
+  height: 3rem;
 `;
 const Input = styled.input`
-  width: 60%;
-  line-height: 3rem;
+  width: 70%;
+  height: 100%;
+  box-sizing: border-box;
   border-radius: 4rem 0 0 4rem;
   padding-left: 2rem;
   border: 1px solid ${({ theme }) => theme.colors.lightGrey};
@@ -206,7 +208,7 @@ const Input = styled.input`
 `;
 const Button = styled.button`
   border-radius: 0 4rem 4rem 0;
-  line-height: 3rem;
+  height: 100%;
   width: 5rem;
   cursor: pointer;
   outline: none;
