@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { FaArrowCircleUp } from "react-icons/fa";
 function TopBtn({ container }) {
   const [ScrollY, setScrollY] = useState(0);
   const [BtnStatus, setBtnStatus] = useState(false);
-  const handleFollow = () => {
+  // setScrollY
+  const handleFollow = useCallback(() => {
     setScrollY(container.current.scrollTop);
-    if (ScrollY > 100) {
-      setBtnStatus(true);
-    } else {
-      setBtnStatus(false);
-    }
-  };
+  }, [container]);
+  // go to top
   const handleTop = () => {
     container.current.scrollTo({
       top: 0,
@@ -20,6 +17,7 @@ function TopBtn({ container }) {
     setScrollY(0);
     setBtnStatus(false);
   };
+  // watch
   useEffect(() => {
     const current = container.current;
     const watch = () => {
@@ -29,7 +27,11 @@ function TopBtn({ container }) {
     return () => {
       current.removeEventListener("scroll", handleFollow);
     };
-  });
+  }, [container, handleFollow]);
+  // view btn
+  useEffect(() => {
+    ScrollY > 50 ? setBtnStatus(true) : setBtnStatus(false);
+  }, [ScrollY]);
 
   return (
     <>
@@ -48,11 +50,10 @@ const Btn = styled.button`
   bottom: 20px;
   right: 20px;
   opacity: ${({ show }) => (show ? "1" : "0")};
-  z-index: ${({ show }) => (show ? "999" : "-10")};
+  z-index: ${({ show }) => (show ? "999" : "-999")};
   border: 0;
   outline: 0;
   cursor: pointer;
-  z-index: 10;
 `;
 const Icon = styled(FaArrowCircleUp)`
   font-size: 2.5rem;

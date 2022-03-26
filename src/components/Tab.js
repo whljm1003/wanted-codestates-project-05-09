@@ -17,7 +17,7 @@ function Tab({ sort, setSort, view, setView }) {
       <SortSeciton>
         {sortTag.map((tag, index) => (
           <SortTab
-            key={index}
+            key={tag}
             selected={sort === index}
             onClick={() => changeSort(index)}
           >

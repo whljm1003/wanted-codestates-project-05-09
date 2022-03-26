@@ -25,11 +25,11 @@ const settings = {
 const StyledSlider = styled(Slider)`
   .slick-prev {
     left: 0px;
-    z-index: -30;
+    z-index: -999;
   }
   .slick-next {
     right: 0px;
-    z-index: -30;
+    z-index: -999;
   }
   .slick-dots {
     bottom: 10px;

@@ -65,7 +65,7 @@ const Background = styled.div`
   right: 0;
   margin: 0 auto;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 20;
+  z-index: 10;
 `;
 const Share = styled.div`
   ${({ theme }) => theme.common.flexColumn}

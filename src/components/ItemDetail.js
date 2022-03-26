@@ -8,6 +8,7 @@ import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import ShareModal from "./ShareModal";
 import { Carousel } from "./Carousel";
+import { v4 as uuid } from "uuid";
 
 const star = [1, 2, 3, 4, 5];
 
@@ -74,10 +75,10 @@ function ItemDetail() {
             </div>
           </LikeSection>
           <Rating>
-            {star.map((start, index) => (
+            {star.map((star) => (
               <Star
-                key={index}
-                color={item?.reviewRate >= start ? "#fbc531" : null}
+                key={star}
+                color={item?.reviewRate >= star ? "#fbc531" : null}
               />
             ))}
           </Rating>
@@ -86,8 +87,8 @@ function ItemDetail() {
           <div className="date">{date(item?.createDt)}</div>
         </Info>
         <CommentsSection onSubmit={addComment}>
-          {item.comments?.map((comment, index) => (
-            <div className="commentSection" key={index}>
+          {item.comments?.map((comment) => (
+            <div className="commentSection" key={uuid()}>
               <span className="commentsId">
                 {comment.commentId?.slice(0, 8)}
               </span>

@@ -8,6 +8,7 @@ import { FaStar } from "react-icons/fa";
 import Loader from "./Loader";
 import ShareModal from "./ShareModal";
 import { Carousel } from "./Carousel";
+import { v4 as uuid } from "uuid";
 
 const star = [1, 2, 3, 4, 5];
 
@@ -49,8 +50,8 @@ function ListView({ data }) {
     <Wrapper>
       {isLoading && <Loader />}
       {isShareModal && <ShareModal setIsShareModal={setIsShareModal} />}
-      {data.map((item, index) => (
-        <Container key={index}>
+      {data.map((item) => (
+        <Container key={uuid()}>
           <Carousel imgData={item.productImg} />
           <Info>
             <LikeSection>
@@ -71,10 +72,10 @@ function ListView({ data }) {
               </div>
             </LikeSection>
             <Rating>
-              {star.map((start, index) => (
+              {star.map((star) => (
                 <Star
-                  key={index}
-                  color={item.reviewRate >= start ? "#fbc531" : null}
+                  key={star}
+                  color={item.reviewRate >= star ? "#fbc531" : null}
                 />
               ))}
             </Rating>

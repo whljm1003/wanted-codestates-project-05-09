@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "./Loader";
 import ReactLoading from "react-loading";
-
+import { v4 as uuid } from "uuid";
 function GridView({ data }) {
   const [list, setList] = useState(data.slice(0, 20));
   const [isLoading, setIsLoading] = useState(false);
@@ -58,10 +58,10 @@ function GridView({ data }) {
     <>
       <Wrapper>
         {isLoading && <Loader />}
-        {list?.map((item, index) => (
+        {list?.map((item) => (
           <div
             className="container"
-            key={index}
+            key={uuid()}
             onClick={() => ClickedItem(item)}
           >
             <img
@@ -73,13 +73,11 @@ function GridView({ data }) {
           </div>
         ))}
       </Wrapper>
-      {list.length !== data.length ? (
-        <Load ref={loadRef}>
-          {isScroll && !isLoading && (
-            <InfiniteLoading type="spin" color="#2f3640" />
-          )}
-        </Load>
-      ) : null}
+      <Load ref={loadRef}>
+        {isScroll && !isLoading && (
+          <InfiniteLoading type="spin" color="#2f3640" />
+        )}
+      </Load>
     </>
   );
 }
@@ -104,7 +102,6 @@ const Wrapper = styled.div`
 const Load = styled.div`
   ${({ theme }) => theme.common.flexRow};
   width: 100%;
-  height: 100px;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 const InfiniteLoading = styled(ReactLoading)`
